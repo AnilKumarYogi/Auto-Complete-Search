@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import AutoComplete from './components/AutoComplete';
+import React, { useState, useEffect } from 'react';
 
 function App() {
+  type user = {
+    id:number,
+    firstName:string,
+    lastName:string,
+    image:string
+  }
+  const [users, setUsers] = useState <user[]> ([]);
+
+  const apiData = async ()=>{
+    // console.log("Hello from apiData");
+    const response = await fetch(
+      "https://dummyjson.com/users/search?q=A&limit=100&skip=0&select=id,firstName,lastName,image"
+      ).then((response)=>response.json());
+      const DataOfUsers:user[] = response.users;
+      setUsers(DataOfUsers);
+  }
+
+  useEffect(() =>{
+    apiData();
+  },[]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AutoComplete Data = {users}/>
   );
 }
 
