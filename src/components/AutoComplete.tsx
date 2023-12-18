@@ -14,7 +14,7 @@ type Props = {
 };
 
 //item per page change here
-const itemsPerPage = 3;
+const itemsPerPage = 5;
 
 const defaultUser: user = {
   id: -1,
